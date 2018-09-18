@@ -7,7 +7,7 @@ var items;
 var cursors;
 var jumpButton;
 var text;
-var lives = 3;
+var lives = 10;
 var powerup = false;
 var winningMessage;
 var won = false;
@@ -15,6 +15,7 @@ var currentScore = 0;
 var winningScore = 100;
 var enemy;
 var enemy1;
+var posiciones = [0,1,2,3,4];
 
 // add collectable items to the game
 function addItems() {
@@ -62,6 +63,48 @@ function createItem(left, top, image) {
   item.animations.play('spin', 10, true);
 }
 
+function comprobarVacio(posicion){
+    var vacio = false;
+  if(posiciones[posicion] != 'poison'){
+    vacio = true;
+  }
+  return vacio;
+
+}
+
+  
+
+function generarNuevo(){
+  
+  var ran = Math.floor(Math.random()*(4));
+  
+  switch(ran){
+    case 0: if(comprobarVacio(0)){
+              createItem(580,160,'poison');
+              posiciones[0] = 'poison';
+            }
+            break;
+    case 1: if(comprobarVacio(1)){
+            createItem(450,410,'poison');
+            }
+            break;
+    case 2: if(comprobarVacio(2)){
+            createItem(360,35,'poison');
+            }
+            break;
+    case 3: if(comprobarVacio(3)){
+            createItem(230,160,'poison');
+            }
+            break;
+    case 4: if(comprobarVacio(4)){
+            createItem(730,260,'poison');
+            }
+            break;
+
+    
+  }
+}
+
 
 
 // create the winning badge and add to screen
@@ -80,27 +123,29 @@ function itemHandler(player, item) {
     case 'star':  powerup = true;
                   currentScore = currentScore + 20;
                   item.kill();
+                
                   break;
-    case 'poison': lives = lives-1;
-    item.kill();
-                   break;
+    case 'poison':lives = lives-1;
+                  
+                  item.kill(); 
+                  generarNuevo();
+                  
+                  break;
+
     case 'fondo': break;
 
 
     default: currentScore = currentScore + 10;
     item.kill();
+    
               if (currentScore === winningScore) {
                   createBadge();
                 }
     }
-
-
-
-  
-  
-  
   
 }
+
+
 
 // when the player collects the badge at the end of the game
 function badgeHandler(player, badge) {
