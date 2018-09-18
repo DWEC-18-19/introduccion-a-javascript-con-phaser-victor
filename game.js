@@ -134,6 +134,8 @@ window.onload = function () {
     game.load.spritesheet('poison', 'poison.png', 32, 32);
     game.load.spritesheet('mikethefrog','mikethefrog.png',32,32);
     game.load.spritesheet('enemigos','enemigosxd.png',250,32);
+    game.load.spritesheet('mario','mario.png',45,55);
+    game.load.spritesheet('tortuga','tortuga1.png',38,58);
 
 
 
@@ -146,14 +148,14 @@ window.onload = function () {
     addItems();
     
 
-    player = game.add.sprite(50, 600, 'player');
+    player = game.add.sprite(50, 600, 'mario');
     player.animations.add('walk');
     player.anchor.setTo(0.5, 1);
     game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
     player.body.gravity.y = 1000;
 
-    enemy = game.add.sprite(800,600,'mikethefrog');
+    enemy = game.add.sprite(800,600,'tortuga');
     enemy.animations.add('walk');
     enemy.anchor.setTo(0.5, 1);
     game.physics.arcade.enable(enemy);
