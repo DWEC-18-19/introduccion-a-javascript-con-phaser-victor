@@ -10,8 +10,9 @@ var text;
 var lives = 10;
 var powerup = false;
 var winningMessage;
+var peachMessage;
 var won = false;
-var currentScore = 0;
+var currentScore = 90;
 var winningScore = 100;
 var enemy;
 var enemy1;
@@ -118,6 +119,7 @@ function createBadge() {
 // when the player collects an item on the screen
 function itemHandler(player, item) {
   
+ 
 
   switch(item.key){
     case 'star':  powerup = true;
@@ -133,6 +135,10 @@ function itemHandler(player, item) {
                   break;
 
     case 'fondo': break;
+    case 'peach': 
+                
+
+                break;
 
 
     default: currentScore = currentScore + 10;
@@ -170,6 +176,7 @@ window.onload = function () {
     game.load.image('platform', 'platform_1.png');
     game.load.image('platform_2', 'platform_2.png');
     game.load.image('fondo','fondo.png');
+    game.load.image('peach','peach.png'),
 
     //Load spritesheets
     game.load.spritesheet('player', 'chalkers.png', 48, 62);
@@ -208,7 +215,7 @@ window.onload = function () {
     enemy.body.gravity.y = 1000;
     enemy.animations.play('walk', 10, true);
 
-    enemy1 = game.add.sprite(220,70,'mikethefrog');
+    enemy1 = game.add.sprite(220,70,'tortuga');
     enemy1.animations.add('walk');
     enemy1.anchor.setTo(0.5, 1);
     game.physics.arcade.enable(enemy1);
@@ -219,8 +226,7 @@ window.onload = function () {
     cursors = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     text = game.add.text(16, 16, "SCORE: " + currentScore, { font: "bold 24px Arial", fill: "white" });
-    winningMessage = game.add.text(game.world.centerX, 275, "", { font: "bold 48px Arial", fill: "white" });
-    winningMessage.anchor.setTo(0.5, 1);
+    texto = game.add.text(370, 485, "", { font: "bold 22px Arial", fill: "white" });
   }
 
   // while the game is running
@@ -293,7 +299,9 @@ window.onload = function () {
     } 
     // when the player winw the game
     if (won) {
-      winningMessage.text = "YOU WIN!!!";
+      
+      texto.text = "Gracias por rescatarme Mario!!";
+      createItem(500,517,'peach');
     }
   }
 
