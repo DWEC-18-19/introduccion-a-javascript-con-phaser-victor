@@ -2,17 +2,18 @@
 var game;
 var player;
 var platforms;
+var fondo;
 var badges;
 var items;
 var cursors;
 var jumpButton;
 var text;
-var lives = 10;
+var lives = 3;
 var powerup = false;
 var winningMessage;
 var peachMessage;
 var won = false;
-var currentScore = 90;
+var currentScore = 0;
 var winningScore = 100;
 var enemy;
 var enemy1;
@@ -125,7 +126,7 @@ function itemHandler(player, item) {
     case 'star':  powerup = true;
                   currentScore = currentScore + 20;
                   item.kill();
-                
+                  textoPowerUp.kill();
                   break;
     case 'poison':lives = lives-1;
                   
@@ -188,6 +189,7 @@ window.onload = function () {
     game.load.spritesheet('enemigos','enemigosxd.png',250,32);
     game.load.spritesheet('mario','mario.png',45,55);
     game.load.spritesheet('tortuga','tortuga1.png',38,58);
+    
 
 
 
@@ -220,13 +222,13 @@ window.onload = function () {
     enemy1.anchor.setTo(0.5, 1);
     game.physics.arcade.enable(enemy1);
     enemy1.body.collideWorldBounds = true;
-    
     enemy1.animations.play('walk', 10, true);
 
     cursors = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     text = game.add.text(16, 16, "SCORE: " + currentScore, { font: "bold 24px Arial", fill: "white" });
     texto = game.add.text(370, 485, "", { font: "bold 22px Arial", fill: "white" });
+    textoPowerUp = game.add.text(563,478,"", { font: "bold 22px Arial", fill: "white" });
   }
 
   // while the game is running
@@ -239,7 +241,7 @@ window.onload = function () {
     
 
     text.text = "SCORE: " + currentScore +"\n"+ "LIVES: " + lives;
-
+    textoPowerUp.text="Power UP!";
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.collide(player, enemy,collisionHandler);
     game.physics.arcade.collide(player, enemy1,collisionHandler);
@@ -301,7 +303,14 @@ window.onload = function () {
     if (won) {
       
       texto.text = "Gracias por rescatarme Mario!!";
+      
+      platforms.callAll('kill');
+      items.callAll('kill');
+      enemy1.kill();
+      platforms.create(0,0,'fondo');
       createItem(500,517,'peach');
+
+
     }
   }
 
